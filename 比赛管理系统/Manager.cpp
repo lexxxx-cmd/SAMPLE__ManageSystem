@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
+#include <deque>
 #define FILENAME "historyInfo.txt"
 
 Manager::Manager()
@@ -147,9 +148,14 @@ void Manager::startContest()
 	system("cls");
 
 
-	//std::cout << "--------第一组开始演讲--------" << std::endl;
-
-	//std::cout << "--------评委为第一组打分--------" << std::endl;
+	std::cout << "--------第一组开始演讲--------" << std::endl;
+	for (std::vector<Contestant>::iterator it = this->stageOnePool1.begin();it != this->stageOnePool1.end();it++)
+	{
+		(*it).speech();
+		std::cout << "--------评委为第一组"<<(*it).getIndex()<<"选手打分--------" << std::endl;
+		(*it).setScore()
+	}
+	
 
 	//std::cout << "--------第一组排名如下--------" << std::endl;
 
@@ -208,4 +214,31 @@ void Manager::Group()
 	}
 	this->stageOnePool1.assign(this->playerPool.begin(), this->playerPool.begin() + 6);
 	this->stageOnePool2.assign(this->playerPool.begin() + 6, this->playerPool.end());
+}
+double Manager::Score()
+{
+	//std::deque<int> temp;
+	int t_score = 0;
+	int t_max = 0;
+	int t_min = 0;
+	int t_total = 0;
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> u(1, 10);
+	//其实这里可以直接记录最大值最小值以及总值，完了直接算平均
+	for (int i = 0;i < 10;i++)
+	{
+		t_score = u(gen);
+		t_total += t_score;
+		if (t_max < t_score)
+		{
+			t_max = t_score;
+		}
+		else if (t_min > t_score)
+		{
+			t_min = t_score;
+		}
+	}
+	return (static_cast<double>(t_total) - t_max - t_min) / 8;
+	//sort(temp.begin(), temp.end());
 }

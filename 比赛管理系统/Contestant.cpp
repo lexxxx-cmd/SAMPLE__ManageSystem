@@ -25,6 +25,10 @@ void Contestant::setTeam(int i)
 double* Contestant::getScore() {
 	return this->scores;
 }
+void Contestant::setScore(double i)
+{
+	this->scores[0] = i;
+}
 void Contestant::showInfo()
 {
 	std::cout
@@ -36,4 +40,8 @@ void Contestant::showInfo()
 		<< " Team is: " << this->getTeam()
 		<< " Score(stage 1) is: " << this->getScore()[0] << " Score(stage 2) is: " << this->getScore()[1]
 		<< std::endl;
+}
+void Contestant::speech()
+{
+	std::cout << this->getName() << "is speaking......." << std::endl;
 }

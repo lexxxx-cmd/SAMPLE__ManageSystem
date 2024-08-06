@@ -13,6 +13,10 @@ public:
     int getTeam();
     void setTeam(int i);
     double* getScore();
+    void setScore(double i);
     void showInfo();
+
+    void speech();
+
 };
 

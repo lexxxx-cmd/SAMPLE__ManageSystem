@@ -27,6 +27,8 @@ public:
 	void showCurrentContestant(std::vector<Contestant> P);
 	void Group();
 
+	double Score();
+
 
 
 };
