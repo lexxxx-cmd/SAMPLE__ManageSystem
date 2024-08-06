@@ -1,3 +1,5 @@
 #pragma once
 #include <iostream>
-int createRandomInt();
+#include <vector>
+class Contestant;
+void pull(std::vector<Contestant>& P);

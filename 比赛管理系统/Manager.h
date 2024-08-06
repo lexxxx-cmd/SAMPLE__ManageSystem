@@ -7,9 +7,14 @@ class Contestant;
 class Manager
 {
 	int numOfPerson;
+	//初始
 	std::vector<Contestant> playerPool;
+	//第一轮分两组分别比赛排序
+	std::vector<Contestant> stageOnePool1;
+	std::vector<Contestant> stageOnePool2;
 	bool hisFileEmpty;
 public:
+	friend void pull(std::vector<Contestant>& P);
 	Manager();
 	~Manager();
 	void showMenu();
@@ -19,8 +24,10 @@ public:
 	void reviseHistoryFile();
 	void clearHistoryFile();
 
-	void showCurrentContestant();
+	void showCurrentContestant(std::vector<Contestant> P);
 	void Group();
+
+
 
 };
 

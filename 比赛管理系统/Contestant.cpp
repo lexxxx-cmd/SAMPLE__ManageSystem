@@ -18,6 +18,10 @@ int Contestant::getIndex()
 int Contestant::getTeam() {
 	return this->team;
 }
+void Contestant::setTeam(int i)
+{
+	this->team = i;
+}
 double* Contestant::getScore() {
 	return this->scores;
 }
