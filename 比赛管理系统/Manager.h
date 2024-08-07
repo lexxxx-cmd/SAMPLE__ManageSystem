@@ -12,6 +12,8 @@ class Manager
 	//第一轮分两组分别比赛排序
 	std::vector<Contestant> stageOnePool1;
 	std::vector<Contestant> stageOnePool2;
+	//决赛组
+	std::vector<Contestant> finalPool;
 	bool hisFileEmpty;
 public:
 	friend void pull(std::vector<Contestant>& P);
@@ -24,10 +26,13 @@ public:
 	void reviseHistoryFile();
 	void clearHistoryFile();
 
-	void showCurrentContestant(std::vector<Contestant> P);
+	void showCurrentContestant(std::vector<Contestant>& P);
 	void Group();
 
 	double Score();
+	void advanceToNextRound(std::vector<Contestant>& P);
+	void save();
+
 
 
 

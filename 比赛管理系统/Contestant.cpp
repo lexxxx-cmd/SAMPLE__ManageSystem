@@ -25,9 +25,9 @@ void Contestant::setTeam(int i)
 double* Contestant::getScore() {
 	return this->scores;
 }
-void Contestant::setScore(double i)
+void Contestant::setScore(double i,int round)
 {
-	this->scores[0] = i;
+	this->scores[round-1] = i;
 }
 void Contestant::showInfo()
 {
@@ -43,5 +43,5 @@ void Contestant::showInfo()
 }
 void Contestant::speech()
 {
-	std::cout << this->getName() << "is speaking......." << std::endl;
+	std::cout << this->getName() << " is speaking......." << std::endl;
 }

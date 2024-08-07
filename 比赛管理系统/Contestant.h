@@ -13,7 +13,7 @@ public:
     int getTeam();
     void setTeam(int i);
     double* getScore();
-    void setScore(double i);
+    void setScore(double i,int round);
     void showInfo();
 
     void speech();
