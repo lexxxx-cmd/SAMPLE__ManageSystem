@@ -120,9 +120,25 @@ void Manager::ctrlWorkFlow()
 	exit(0);
 	
 }
-void Manager::reviseHistoryFile()
+void Manager::reviseHistoryFile(std::vector<Contestant>& P)
 {
-
+	std::ofstream ofs_temp;
+	ofs_temp.open(FILENAME, std::ios::out | std::ios::app);
+	if (!ofs_temp.is_open())
+	{
+		ofs_temp.close();
+	}
+	for (std::vector<Contestant>::iterator it = P.begin();it != P.begin() + 3;it++)
+	{
+		ofs_temp << (*it).getName() << " "
+			<< it->getgender() << " "
+			<< it->getAge() << " "
+			<< 0.3 * (*it).getScore()[0] + 0.7 * (*it).getScore()[1]
+			<< std::endl;
+	}
+	std::cout << "--------已记录--------" << std::endl;
+	this->hisFileEmpty = false;
+	ofs_temp.close();
 }
 void Manager::startContest()
 {
@@ -152,12 +168,7 @@ void Manager::startContest()
 
 
 	std::cout << "--------第一组开始演讲--------" << std::endl;
-	for (std::vector<Contestant>::iterator it = this->stageOnePool1.begin();it != this->stageOnePool1.end();it++)
-	{
-		(*it).speech();
-		std::cout << "--------评委为第一组 "<<(*it).getIndex()<<"选手打分--------" << std::endl;
-		(*it).setScore(this->Score(),1);
-	}
+	this->teamSpeech(this->stageOnePool1, 1);
 	std::cout << "--------第一组排名如下--------" << std::endl;
 	sort(this->stageOnePool1.begin(), this->stageOnePool1.end(), CompByScore);
 	advanceToNextRound(this->stageOnePool1);
@@ -167,12 +178,7 @@ void Manager::startContest()
 	system("cls");
 
 	std::cout << "--------第二组开始演讲--------" << std::endl;
-	for (std::vector<Contestant>::iterator it = this->stageOnePool2.begin();it != this->stageOnePool2.end();it++)
-	{
-		(*it).speech();
-		std::cout << "--------评委为第二组 " << (*it).getIndex() << "选手打分--------" << std::endl;
-		(*it).setScore(this->Score(),1);
-	}
+	this->teamSpeech(this->stageOnePool2, 1);
 	std::cout << "--------第二组排名如下--------" << std::endl;
 	sort(this->stageOnePool2.begin(), this->stageOnePool2.end(), CompByScore);
 	advanceToNextRound(this->stageOnePool2);
@@ -192,19 +198,15 @@ void Manager::startContest()
 	system("cls");
 
 	std::cout << "--------决赛组开始演讲--------" << std::endl;
-	for (std::vector<Contestant>::iterator it = this->finalPool.begin();it != this->finalPool.end();it++)
-	{
-		(*it).speech();
-		std::cout << "--------评委为决赛组 " << (*it).getIndex() << "选手打分--------" << std::endl;
-		(*it).setScore(this->Score(),2);
-	}
+	this->teamSpeech(this->finalPool, 2);
 	std::cout << "--------决赛组排名如下--------" << std::endl;
 	sort(this->finalPool.begin(), this->finalPool.end(), CompByScore);
 	this->showCurrentContestant(this->finalPool);
 	
 
 	//将这次的比赛成绩写入文件
-	std::ofstream ofs_temp;
+	this->reviseHistoryFile(this->finalPool);
+	/*std::ofstream ofs_temp;
 	ofs_temp.open(FILENAME, std::ios::out | std::ios::app);
 	if (!ofs_temp.is_open())
 	{
@@ -220,7 +222,7 @@ void Manager::startContest()
 	}
 	std::cout << "--------已记录--------" << std::endl;
 	this->hisFileEmpty = false;
-	ofs_temp.close();
+	ofs_temp.close();*/
 }
 void Manager::checkHistoryFile()
 {
@@ -234,6 +236,10 @@ void Manager::checkHistoryFile()
 			std::cout << temp << std::endl;
 		}
 		ifs.close();
+	}
+	else
+	{
+		std::cout << "文件为空！" << std::endl;
 	}
 
 }
@@ -327,4 +333,13 @@ void Manager::save()
 	std::cout << "--------已记录--------" << std::endl;
 	this->hisFileEmpty = false;
 	ofs_temp.close();
+}
+void Manager::teamSpeech(std::vector<Contestant>& P,int round)
+{
+	for (std::vector<Contestant>::iterator it = P.begin();it != P.end();it++)
+	{
+		(*it).speech();
+		std::cout << "--------评委为该组 " << (*it).getIndex() << "选手打分--------" << std::endl;
+		(*it).setScore(this->Score(), round);
+	}
 }

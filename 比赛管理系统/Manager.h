@@ -23,7 +23,7 @@ public:
 	void ctrlWorkFlow();
 	void startContest();
 	void checkHistoryFile();
-	void reviseHistoryFile();
+	void reviseHistoryFile(std::vector<Contestant>& P);
 	void clearHistoryFile();
 
 	void showCurrentContestant(std::vector<Contestant>& P);
@@ -32,7 +32,7 @@ public:
 	double Score();
 	void advanceToNextRound(std::vector<Contestant>& P);
 	void save();
-
+	void teamSpeech(std::vector<Contestant>& P,int round);
 
 
 
